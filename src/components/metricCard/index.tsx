@@ -36,7 +36,7 @@ export const MetricCard = ({ variant }: { variant: MetricType }) => {
         autoFit: true,
         tooltip: false,
         xField: "index",
-        yField: "value",
+        yField: "value"    
     };
 
     return (

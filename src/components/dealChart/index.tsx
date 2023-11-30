@@ -80,33 +80,18 @@ export const DealChart: React.FC = () => {
     }, [data]);
 
     const config: AreaConfig = {
-        isStack: false,
+        stack: false,
         data: dealData,
         xField: "timeText",
         yField: "value",
         seriesField: "state",
-        animation: true,
-        startOnZero: false,
-        smooth: true,
         legend: { offsetY: -6 },
-        yAxis: {
-            tickCount: 4,
-            label: {
-                formatter: (v) => `$${Number(v) / 1000}k`,
-            },
-        },
         tooltip: {
-            formatter: (data) => ({
+            formatter: (data: any) => ({
                 name: data.state,
                 value: `$${Number(data.value) / 1000}k`,
             }),
         },
-        areaStyle: (datum) => {
-            const won = "l(270) 0:#ffffff 0.5:#b7eb8f 1:#52c41a";
-            const lost = "l(270) 0:#ffffff 0.5:#f3b7c2 1:#ff4d4f";
-            return { fill: datum.state === "Won" ? won : lost };
-        },
-        color: (datum) => (datum.state === "Won" ? "#52C41A" : "#F5222D"),
     };
 
     return (
