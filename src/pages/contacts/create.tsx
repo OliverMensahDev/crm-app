@@ -6,7 +6,15 @@ import { Form, Input, Select } from "antd";
 export const ContactCreate: React.FC<IResourceComponentsProps> = () => {
     const { formProps, saveButtonProps } = useForm();
 
-    const { selectProps } = useSelect({
+    const { selectProps: companySelectProps } = useSelect({
+        resource: "companies",
+        optionLabel: "name",
+        meta: {
+            fields: ["id", "name"],
+        },
+    });
+
+    const { selectProps: salesOwnerSelectProps } = useSelect({
         resource: "users",
         meta: {
             fields: ["name", "id"],
@@ -17,40 +25,54 @@ export const ContactCreate: React.FC<IResourceComponentsProps> = () => {
     return (
         <Create saveButtonProps={saveButtonProps}>
             <Form {...formProps} layout="vertical">
-                <Form.Item label="Name" name={["name"]}>
+                <Form.Item
+                    label="Name"
+                    name={["name"]}
+                    rules={[{ required: true }]}
+                >
                     <Input />
+                </Form.Item>
+                <Form.Item
+                    label="Email"
+                    name={["email"]}
+                    rules={[{ required: true }]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    label="Company"
+                    name={["companyId"]}
+                    rules={[{ required: true }]}
+                >
+                    <Select {...companySelectProps} />
                 </Form.Item>
                 <Form.Item
                     label="Sales Owner"
                     name="salesOwnerId"
                     rules={[{ required: true }]}
                 >
-                    <Select {...selectProps} />
+                    <Select {...salesOwnerSelectProps} />
                 </Form.Item>
-                <Form.Item label="Business Type" name={["businessType"]}>
-                    <Select
-                        options={[
-                            { label: "B2B", value: "B2B" },
-                            { label: "B2C", value: "B2C" },
-                            { label: "B2G", value: "B2G" },
-                        ]}
-                    />
-                </Form.Item>
-                <Form.Item label="Company Size" name={["companySize"]}>
-                    <Select
-                        options={[
-                            { label: "Enterprise", value: "ENTERPRISE" },
-                            { label: "Large", value: "LARGE" },
-                            { label: "Medium", value: "MEDIUM" },
-                            { label: "Small", value: "SMALL" },
-                        ]}
-                    />
-                </Form.Item>
-                <Form.Item label="Country" name={["country"]}>
+                <Form.Item label="Job Title" name={["jobTitle"]}>
                     <Input />
                 </Form.Item>
-                <Form.Item label="Website" name={["website"]}>
+                <Form.Item label="Phone" name={["phone"]}>
                     <Input />
+                </Form.Item>
+                <Form.Item label="Status" name={["status"]}>
+                    <Select
+                        options={[
+                            { label: "NEW", value: "NEW" },
+                            { label: "CONTACTED", value: "CONTACTED" },
+                            { label: "INTERESTED", value: "INTERESTED" },
+                            { label: "UNQUALIFIED", value: "UNQUALIFIED" },
+                            { label: "QUALIFIED", value: "QUALIFIED" },
+                            { label: "NEGOTIATION", value: "NEGOTIATION" },
+                            { label: "LOST", value: "LOST" },
+                            { label: "WON", value: "WON" },
+                            { label: "CHURNED", value: "CHURNED" },
+                        ]}
+                    />
                 </Form.Item>
             </Form>
         </Create>

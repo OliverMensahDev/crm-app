@@ -7,12 +7,13 @@ export const ContactEdit: React.FC<IResourceComponentsProps> = () => {
     const { formProps, saveButtonProps } = useForm({
         meta: {
             fields: [
+                "avatarUrl",
                 "id",
                 "name",
-                "businessType",
-                "companySize",
-                "country",
-                "website",
+                "email",
+                "jobTitle",
+                "phone",
+                "status",
             ],
         },
     });
@@ -27,31 +28,33 @@ export const ContactEdit: React.FC<IResourceComponentsProps> = () => {
                 >
                     <Input />
                 </Form.Item>
-                <Form.Item label="Business Type" name={["businessType"]}>
-                    <Select
-                        options={[
-                            { label: "B2B", value: "B2B" },
-                            { label: "B2C", value: "B2C" },
-                            { label: "B2G", value: "B2G" },
-                        ]}
-                    />
-                </Form.Item>
-
-                <Form.Item label="Company Size" name={["companySize"]}>
-                    <Select
-                        options={[
-                            { label: "Enterprise", value: "ENTERPRISE" },
-                            { label: "Large", value: "LARGE" },
-                            { label: "Medium", value: "MEDIUM" },
-                            { label: "Small", value: "SMALL" },
-                        ]}
-                    />
-                </Form.Item>
-                <Form.Item label="Country" name={["country"]}>
+                <Form.Item
+                    label="Email"
+                    name={["email"]}
+                    rules={[{ required: true }]}
+                >
                     <Input />
                 </Form.Item>
-                <Form.Item label="Website" name={["website"]}>
+                <Form.Item label="Job Title" name={["jobTitle"]}>
                     <Input />
+                </Form.Item>
+                <Form.Item label="Phone" name={["phone"]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item label="Status" name={["status"]}>
+                    <Select
+                        options={[
+                            { label: "NEW", value: "NEW" },
+                            { label: "CONTACTED", value: "CONTACTED" },
+                            { label: "INTERESTED", value: "INTERESTED" },
+                            { label: "UNQUALIFIED", value: "UNQUALIFIED" },
+                            { label: "QUALIFIED", value: "QUALIFIED" },
+                            { label: "NEGOTIATION", value: "NEGOTIATION" },
+                            { label: "LOST", value: "LOST" },
+                            { label: "WON", value: "WON" },
+                            { label: "CHURNED", value: "CHURNED" },
+                        ]}
+                    />
                 </Form.Item>
             </Form>
         </Edit>

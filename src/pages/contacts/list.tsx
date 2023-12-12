@@ -6,59 +6,75 @@ import {
     EditButton,
     ShowButton,
     DeleteButton,
-    UrlField,
+    EmailField,
     TextField,
 } from "@refinedev/antd";
-import { Table, Space, Avatar } from "antd";
+import { Table, Space, Avatar, Form, Input } from "antd";
 
 export const ContactList: React.FC<IResourceComponentsProps> = () => {
-    const { tableProps } = useTable({
+    const { tableProps, searchFormProps } = useTable({
         meta: {
             fields: [
-                "id",
                 "avatarUrl",
+                "id",
                 "name",
-                "businessType",
-                "companySize",
-                "country",
-                "website",
-                { salesOwner: ["id", "name"] },
+                "email",
+                { company: ["id", "name"] },
+                "jobTitle",
+                "phone",
+                "status",
             ],
         },
+        onSearch: (params: { name: string }) => [
+            {
+                field: "name",
+                operator: "contains",
+                value: params.name,
+            },
+        ],
     });
 
     return (
-        <List>
+        <List
+            headerButtons={({ defaultButtons }) => (
+                <>
+                    <Form
+                        {...searchFormProps}
+                        onValuesChange={() => {
+                            searchFormProps.form?.submit();
+                        }}
+                    >
+                        <Form.Item noStyle name="name">
+                            <Input.Search placeholder="Search by name" />
+                        </Form.Item>
+                    </Form>
+                    {defaultButtons}
+                </>
+            )}
+        >
             <Table {...tableProps} rowKey="id">
                 <Table.Column
                     title="Name"
+                    width={200}
                     render={(
                         _,
                         record: { name: string; avatarUrl: string },
                     ) => (
                         <Space>
-                            <Avatar
-                                src={record.avatarUrl}
-                                size="large"
-                                shape="square"
-                                alt={record.name}
-                            />
+                            <Avatar src={record.avatarUrl} alt={record.name} />
                             <TextField value={record.name} />
                         </Space>
                     )}
                 />
-                <Table.Column dataIndex="businessType" title="Business Type" />
-                <Table.Column dataIndex="companySize" title="Company Size" />
-                <Table.Column dataIndex="country" title="Country" />
+                <Table.Column dataIndex={["company", "name"]} title="Company" />
+                <Table.Column dataIndex="jobTitle" title="Job Title" />
                 <Table.Column
-                    dataIndex={["website"]}
-                    title="Website"
-                    render={(value: string) => <UrlField value={value} />}
+                    dataIndex={["email"]}
+                    title="Email"
+                    render={(value) => <EmailField value={value} />}
                 />
-                <Table.Column
-                    dataIndex={["salesOwner", "name"]}
-                    title="Sales Owner"
-                />
+                <Table.Column dataIndex="phone" title="Phone" />
+                <Table.Column dataIndex="status" title="Status" />
                 <Table.Column
                     title="Actions"
                     dataIndex="actions"

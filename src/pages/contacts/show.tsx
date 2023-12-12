@@ -1,6 +1,6 @@
 import React from "react";
 import { IResourceComponentsProps, useShow } from "@refinedev/core";
-import { Show, NumberField, TextField } from "@refinedev/antd";
+import { Show, NumberField, TextField, EmailField } from "@refinedev/antd";
 import { Typography } from "antd";
 
 const { Title } = Typography;
@@ -11,15 +11,15 @@ export const ContactShow: React.FC<IResourceComponentsProps> = () => {
             fields: [
                 "id",
                 "name",
-                "businessType",
-                "companySize",
-                "country",
-                "website",
+                "email",
+                { company: ["id", "name"] },
+                "jobTitle",
+                "phone",
+                "status",
             ],
         },
     });
     const { data, isLoading } = queryResult;
-
     const record = data?.data;
 
     return (
@@ -28,14 +28,16 @@ export const ContactShow: React.FC<IResourceComponentsProps> = () => {
             <NumberField value={record?.id ?? ""} />
             <Title level={5}>Name</Title>
             <TextField value={record?.name} />
-            <Title level={5}>Business Type</Title>
-            <TextField value={record?.businessType} />
-            <Title level={5}>Company Size</Title>
-            <TextField value={record?.companySize} />
-            <Title level={5}>Country</Title>
-            <TextField value={record?.country} />
-            <Title level={5}>Website</Title>
-            <TextField value={record?.website} />
+            <Title level={5}>Email</Title>
+            <EmailField value={record?.email} />
+            <Title level={5}>Company</Title>
+            <TextField value={record?.company?.name} />
+            <Title level={5}>Job Title</Title>
+            <TextField value={record?.jobTitle} />
+            <Title level={5}>Phone</Title>
+            <TextField value={record?.phone} />
+            <Title level={5}>Status</Title>
+            <TextField value={record?.status} />
         </Show>
     );
 };
